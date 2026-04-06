@@ -2,6 +2,10 @@ import type {Route} from "./+types/home";
 import Navbar from "../components/Navbar";
 import { resumes } from "~/constants";
 import ResumeCard from "~/components/ResumeCard";
+import { usePuterStore } from "~/lib/puter";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "ResuAI - Home" },
@@ -10,6 +14,13 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const { auth } = usePuterStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!auth.isAuthenticated) {
+      navigate('/auth?next=/');
+    }
+  }, []);
   return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
     <section className="main-section">
       <div className="page-heading pb-16">
