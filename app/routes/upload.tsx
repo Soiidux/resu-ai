@@ -64,6 +64,7 @@ export default function Upload() {
     
     setStatusText('Analysis complete. Feedback saved.');
     console.log(data);
+    navigate(`/resume/${uuid}`)
   };
   
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
