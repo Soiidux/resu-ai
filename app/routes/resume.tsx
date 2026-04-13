@@ -16,14 +16,14 @@ export default function Resume() {
   const { auth, isLoading, fs, kv } = usePuterStore();
   const [imageUrl, setImageUrl] = useState("");
   const [resumeUrl, setResumeUrl] = useState("");
-  const [feedback, setFeedback] = useState<Feedback|null>(null);
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoading && !auth.isAuthenticated) {
-      navigate(`/auth?next=/resume/${id}`)
+      navigate(`/auth?next=/resume/${id}`);
     }
   }, [isLoading]);
-  
+
   useEffect(() => {
     const loadResume = async () => {
       const resume = await kv.get(`resume:${id}`);
@@ -78,11 +78,11 @@ export default function Resume() {
           {feedback ? (
             <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
               <Summary feedback={feedback} />
-              <ATS ATS={feedback.ATS.score} />
+              <ATS score={feedback.ATS.score} suggestions={feedback.ATS.tips} />
               <Details feedback={feedback} />
             </div>
           ) : (
-              <img src="/images/resume-scan-2.gif" className="w-full"></img>
+            <img src="/images/resume-scan-2.gif" className="w-full"></img>
           )}
         </section>
       </div>
